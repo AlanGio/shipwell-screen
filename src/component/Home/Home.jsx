@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { PureComponent } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 import classnames from 'classnames';
 import { register, action } from '../../redux';
 
@@ -48,28 +48,51 @@ class Home extends PureComponent {
 
     return (
       <section className="home">
-        {loading && 'Loading'}
+        {loading && <div className="loading row">Loading</div>}
 
         {error && (
-          <div>
+          <div className="errors row">
             <h3>{error.error_description}</h3>
             <p>{error.non_field_errors && error.non_field_errors.join(', ')}</p>
           </div>
         )}
 
-        <form onSubmit={e => this.handleSubmitForm(e)}>
-          Name:
-          <br />
-          <input type="text" name="name" required />
-          <br />
-          Address:
-          <br />
-          <input type="text" name="formattedAddress" required />
-          <br />
-          <input type="submit" value="Add Stop" />
+        <form onSubmit={e => this.handleSubmitForm(e)} className="row">
+          <label htmlFor="name">
+            <span>Name:</span>
+            <input type="text" name="name" required disabled={loading} />
+          </label>
+
+          <label htmlFor="formattedAddress">
+            <span>Address:</span>
+            <input
+              type="text"
+              name="formattedAddress"
+              minLength="3"
+              required
+              disabled={loading}
+            />
+          </label>
+
+          <label htmlFor="submit">
+            <input
+              type="submit"
+              name="submit"
+              value="Add Stop"
+              disabled={loading}
+            />
+          </label>
         </form>
 
-        <ol>
+        {items.length > 0 && (
+          <Fragment>
+            <hr />
+            <h2>Items added</h2>
+            <hr />
+          </Fragment>
+        )}
+
+        <ol className="row">
           {items &&
             items.map((item, i) => {
               const itemIndex = i;
@@ -78,39 +101,44 @@ class Home extends PureComponent {
                   key={`${itemIndex}_item`}
                   className={classnames({ completed: item.completed })}
                 >
-                  {item.name}-{item.address.formatted_address}
-                  <input
-                    key={
-                      itemIndex + (item.completed ? 'complete' : 'incomplete')
-                    }
-                    type="checkbox"
-                    defaultChecked={item.completed}
-                    onClick={e =>
-                      completeAddress({
-                        address_index: i,
-                        completed: e.target.checked,
-                      })
-                    }
-                  />
-                  -
-                  <button
-                    type="button"
-                    onClick={() =>
-                      openModal('address', {
-                        item,
-                        address_index: i,
-                      })
-                    }
-                  >
-                    edit
-                  </button>
-                  -
-                  <button
-                    type="button"
-                    onClick={() => deleteAddress({ address_index: i })}
-                  >
-                    x
-                  </button>
+                  <label className="container" htmlFor={`${itemIndex}_item`}>
+                    <input
+                      key={
+                        itemIndex + (item.completed ? 'complete' : 'incomplete')
+                      }
+                      id={`${itemIndex}_item`}
+                      type="checkbox"
+                      defaultChecked={item.completed}
+                      onClick={e =>
+                        completeAddress({
+                          address_index: i,
+                          completed: e.target.checked,
+                        })
+                      }
+                    />
+                    <span className="checkmark" />
+                    <h2>{item.name}</h2>
+                    <h3>{item.address.formatted_address}</h3>
+                  </label>
+                  <div className="button-actions">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        openModal('address', {
+                          item,
+                          address_index: i,
+                        })
+                      }
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => deleteAddress({ address_index: i })}
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </li>
               );
             })}

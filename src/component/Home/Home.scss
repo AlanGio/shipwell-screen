@@ -1,7 +1,71 @@
 .home {
-    ol {
-        li.completed {
-            text-decoration: line-through;
-        }
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 32px;
+  position: relative;
+
+  .errors, .loading {
+    padding: 16px 8px;
+    background-color: lightpink;
+
+    h3 {
+      color: darkred;
+      display: block;
     }
+  }
+
+  .loading {
+    background-color: lightblue;
+  }
+
+  label {
+    align-self: center;
+    margin: 0 0 0 24px;
+  }
+
+  ol {
+    list-style: none;
+    counter-reset: my-awesome-counter;
+    display: block;
+
+    li {
+      width: 100%;
+      padding: 8px;
+      margin-top: 2px;
+      background-color: rgba(255, 255, 255, 0.8);
+      counter-increment: my-awesome-counter;
+
+      h2 {
+        text-transform: capitalize;
+        display: inline-block;
+      }
+
+      .button-actions {
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      &.completed {
+        text-decoration: line-through;
+      }
+
+      &::before {
+        content: counter(my-awesome-counter) ". ";
+        font-weight: 600;
+        position: absolute;
+      }
+    }
+  }
+}
+
+
+@media screen and (max-width: 700px) {
+  .home {
+    label {
+      width: 100%;
+      input {
+        width:100%;
+        margin: 0;
+      }
+    }
+  }
 }

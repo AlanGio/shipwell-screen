@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import classnames from 'classnames';
 import Modal from '../Modal';
 import { register, action } from '../../redux';
 
 const Layout = ({ modal: { name, data }, closeModal, children }) => [
-  <div className="content-wrap" key="content-wrap">
-    {children}
-  </div>,
-
+  <Fragment>
+    <h1>Shipment Itinerary</h1>
+    <div className="content-wrap" key="content-wrap">
+      {children}
+    </div>
+  </Fragment>,
   <div
     className={classnames('overlay-wrap', { 'modal-open': name })}
     key="overlay-wrap"

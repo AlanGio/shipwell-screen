@@ -1,34 +1,142 @@
-html, body, .root, .content-wrap {
-  height: 100%; }
+@charset "UTF-8";
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+@import url("https://fonts.googleapis.com/css?family=Dosis:400,600&display=swap");
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
 
-.overlay-wrap {
-  display: flex;
-  padding: 15px;
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after {
+  content: '';
+  content: none; }
+
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* The container */
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0; }
+
+/* Create a custom checkbox */
+.checkmark {
   position: absolute;
   top: 0;
-  right: 0;
-  bottom: 0;
   left: 0;
-  visibility: hidden;
-  opacity: 0;
-  background-color: rgba(255, 255, 255, 0.6);
-  overflow-y: auto;
-  transition: opacity .2s ease, visibility .2s ease; }
-  .overlay-wrap.modal-open {
-    opacity: 1;
-    visibility: visible; }
+  height: 25px;
+  width: 25px;
+  background-color: #eee; }
 
-.show-left {
-  animation: show-left .3s ease; }
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc; }
 
-@keyframes show-left {
-  0% {
-    opacity: 0;
-    transform: translate3d(-10px, 0, 0); }
-  50% {
-    opacity: 1; }
-  100% {
-    transform: translate3d(0, 0, 0); } }
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #2196F3; }
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none; }
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block; }
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg); }
+
+html, body, .root {
+  height: 100%; }
+
+body {
+  background: #b5c6d0;
+  font-family: 'Dosis', sans-serif;
+  font-size: 21px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Column container */ }
+  body h1 {
+    font-size: 32px;
+    line-height: 80px;
+    font-weight: 600; }
+  body h2 {
+    font-weight: 600; }
+  body h3, body p {
+    font-size: 20px;
+    line-height: 24px; }
+  body input {
+    border: 1px solid #eee;
+    font-size: 18px;
+    padding: 8px 4px;
+    margin: 0 8px;
+    font-family: 'Dosis', sans-serif; }
+    body input[type='submit'] {
+      padding: 8px 16px; }
+  body button {
+    border: 1px solid lightgray;
+    font-size: 14px;
+    min-width: 56px; }
+  body .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 4px 0; }
+
+@media screen and (max-width: 700px) {
+  .row {
+    flex-direction: column; } }
 
 .modal {
   position: relative;
@@ -64,5 +172,47 @@ html, body, .root, .content-wrap {
   100% {
     transform: scale(1); } }
 
-.home ol li.completed {
-  text-decoration: line-through; }
+.home {
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 32px;
+  position: relative; }
+  .home .errors, .home .loading {
+    padding: 16px 8px;
+    background-color: lightpink; }
+    .home .errors h3, .home .loading h3 {
+      color: darkred;
+      display: block; }
+  .home .loading {
+    background-color: lightblue; }
+  .home label {
+    align-self: center;
+    margin: 0 0 0 24px; }
+  .home ol {
+    list-style: none;
+    counter-reset: my-awesome-counter;
+    display: block; }
+    .home ol li {
+      width: 100%;
+      padding: 8px;
+      margin-top: 2px;
+      background-color: rgba(255, 255, 255, 0.8);
+      counter-increment: my-awesome-counter; }
+      .home ol li h2 {
+        text-transform: capitalize;
+        display: inline-block; }
+      .home ol li .button-actions  {
+        display: flex;
+        justify-content: flex-end; }
+      .home ol li.completed {
+        text-decoration: line-through; }
+      .home ol li::before {
+        content: counter(my-awesome-counter) ". ";
+        font-weight: 600;
+        position: absolute; }
+
+@media screen and (max-width: 700px) {
+  .home label {
+    width: 100%; }
+    .home label input {
+      width: 100%;
+      margin: 0; } }
