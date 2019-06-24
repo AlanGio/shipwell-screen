@@ -1,22 +1,33 @@
-import React from 'react';
+import PropTypes from 'prop-types';
+import React, { Fragment } from 'react';
 import classnames from 'classnames';
 import Modal from '../Modal';
 import { register, action } from '../../redux';
 
-const Layout = ({ modal: { name, data }, closeModal, children }) => [
-  <div key="overlay-home">
+const propTypes = {
+  modal: PropTypes.shape({}),
+  closeModal: PropTypes.func,
+  children: PropTypes.shape({}),
+};
+
+const defaultProps = {
+  modal: {},
+  closeModal: () => {},
+  children: {},
+};
+
+const Layout = ({ modal: { name, data }, closeModal, children }) => (
+  <Fragment>
     <h1>Shipment itinerary</h1>
-    <div className="content-wrap" key="content-wrap">
-      {children}
+    <div className="content-wrap">{children}</div>
+    <div className={classnames('overlay-wrap', { 'modal-open': name })}>
+      {name && <Modal name={name} data={data} closeModal={closeModal} />}
     </div>
-  </div>,
-  <div
-    className={classnames('overlay-wrap', { 'modal-open': name })}
-    key="overlay-wrap"
-  >
-    {name && <Modal name={name} data={data} closeModal={closeModal} />}
-  </div>,
-];
+  </Fragment>
+);
+
+Layout.propTypes = propTypes;
+Layout.defaultProps = defaultProps;
 
 export default register(
   ({ layout }) => ({
