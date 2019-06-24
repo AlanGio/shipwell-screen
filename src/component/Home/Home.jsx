@@ -34,6 +34,9 @@ class Home extends PureComponent {
       name: name.value,
       formattedAddress: formattedAddress.value,
     });
+
+    name.value = '';
+    formattedAddress.value = '';
   }
 
   render() {
