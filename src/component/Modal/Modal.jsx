@@ -43,7 +43,7 @@ class Modal extends PureComponent {
         </button>
 
         <div className="modal-content">
-          <h3>Edit Address</h3>
+          <h2>Edit Address</h2>
 
           {error && (
             <div>
@@ -54,26 +54,36 @@ class Modal extends PureComponent {
             </div>
           )}
 
-          <form onSubmit={e => this.handleSubmitForm(e)}>
-            Name:
-            <br />
-            <input
-              type="text"
-              name="name"
-              defaultValue={data.item.name}
-              required
-            />
-            <br />
-            Address:
-            <br />
-            <input
-              type="text"
-              name="formattedAddress"
-              defaultValue={data.item.address.formatted_address}
-              required
-            />
-            <br />
-            <input type="submit" value="Add Stop" />
+          <form onSubmit={e => this.handleSubmitForm(e)} className="row">
+            <label htmlFor="name">
+              <span>Name:</span>
+              <input
+                type="text"
+                name="name"
+                required
+                defaultValue={data.item.name}
+              />
+            </label>
+
+            <label htmlFor="formattedAddress">
+              <span>Address:</span>
+              <input
+                type="text"
+                name="formattedAddress"
+                minLength="3"
+                required
+                defaultValue={data.item.address.formatted_address}
+              />
+            </label>
+            <label htmlFor="submit">
+              <input
+                type="button"
+                name="cancel"
+                value="Cancel"
+                onClick={() => closeModal()}
+              />
+              <input type="submit" name="submit" value="Save Stop" />
+            </label>
           </form>
         </div>
       </div>

@@ -4,22 +4,25 @@
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 480px;
   margin: auto;
   border-radius: 3px;
   animation: modal-open .2s ease;
 
   &-close {
     position: absolute;
-    top: 5px;
-    right: 15px;
-    border: 0;
-    font-size: 24px;
     outline: none;
+    top: 8px;
+    right: 0;
+    border: 0;
+    font-size: 32px;
   }
 
   &-content {
     padding: 30px;
+
+    label {
+      margin: 8px 0;
+    }
   }
 
   &-bottom {
